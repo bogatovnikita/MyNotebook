@@ -4,7 +4,7 @@ import javax.annotation.Nullable;
 
 public class NoteEntity {
     @Nullable
-    private final Integer id;
+    private Integer id;
     private String title;
     private String noteText;
 
@@ -17,6 +17,10 @@ public class NoteEntity {
     @Nullable
     public Integer getId() {
         return id;
+    }
+
+    public void setId(@Nullable Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {
