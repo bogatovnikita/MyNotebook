@@ -1,4 +1,4 @@
-package com.bogatovnikita.mynotebook;
+package com.bogatovnikita.mynotebook.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,13 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.bogatovnikita.mynotebook.R;
+import com.bogatovnikita.mynotebook.domain.NotesRepo;
+import com.bogatovnikita.mynotebook.impl.NotesRepoImpl;
+
 public class NotepadPages extends AppCompatActivity {
     private Toolbar toolbar;
+    private NotesRepo repo = new NotesRepoImpl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,9 +1,11 @@
-package com.bogatovnikita.mynotebook;
+package com.bogatovnikita.mynotebook.ui;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.bogatovnikita.mynotebook.R;
 
 public class NotePage extends AppCompatActivity {
     @Override
