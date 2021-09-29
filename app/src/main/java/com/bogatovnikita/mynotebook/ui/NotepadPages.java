@@ -8,11 +8,15 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bogatovnikita.mynotebook.R;
 
 public class NotepadPages extends AppCompatActivity {
     private Toolbar toolbar;
+    private RecyclerView recyclerView;
+    private NotesAdapter adapter = new NotesAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +24,9 @@ public class NotepadPages extends AppCompatActivity {
         setContentView(R.layout.activity_notepad_pages);
 
         initToolbar();
+
+        initRecyclerView();
+
     }
 
     private void initToolbar() {
@@ -28,9 +35,8 @@ public class NotepadPages extends AppCompatActivity {
     }
 
     /**
-     * методы для работы меню
+     * метод для работы меню
      */
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -38,6 +44,9 @@ public class NotepadPages extends AppCompatActivity {
         return true;//возвращает истину, если меню создано
     }
 
+    /**
+     * метод для работы меню
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.new_note_menu) {
@@ -50,5 +59,11 @@ public class NotepadPages extends AppCompatActivity {
     private void openNewNote() {
         Intent intent = new Intent(this, NotePage.class);
         startActivity(intent);
+    }
+
+    private void initRecyclerView() {
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 }

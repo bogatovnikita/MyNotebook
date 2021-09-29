@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="small_padding">8dp</dimen>
+    <dimen name="large_padding">16dp</dimen>
+    <dimen name="big_padding">24dp</dimen>
+
     <dimen name="small_text">20dp</dimen>
     <dimen name="large_text">34dp</dimen>
     <dimen name="big_text">50dp</dimen>
     <dimen name="text_size_title">@dimen/large_text</dimen>
     <dimen name="text_size_note_text">@dimen/small_text</dimen>
+
+    <dimen name="padding">@dimen/large_padding</dimen>
 </resources>
