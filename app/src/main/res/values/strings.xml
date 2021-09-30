@@ -3,4 +3,5 @@
     <string name="add_new_page">Создать новую заметку</string>
     <string name="title_text">Заголовок</string>
     <string name="note_text">Текст заметки</string>
+    <string name="save_note">Сохранить заметку</string>
 </resources>

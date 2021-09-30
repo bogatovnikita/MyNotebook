@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bogatovnikita.mynotebook.R;
+import com.bogatovnikita.mynotebook.domain.Repository;
 
 public class NotepadPages extends AppCompatActivity {
     private Toolbar toolbar;
@@ -22,11 +23,9 @@ public class NotepadPages extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad_pages);
-
         initToolbar();
 
         initRecyclerView();
-
     }
 
     private void initToolbar() {
@@ -65,5 +64,6 @@ public class NotepadPages extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        adapter.setData(Repository.repo.getNotes());
     }
 }
