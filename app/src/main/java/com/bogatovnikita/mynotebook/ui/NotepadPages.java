@@ -2,6 +2,7 @@ package com.bogatovnikita.mynotebook.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bogatovnikita.mynotebook.R;
+import com.bogatovnikita.mynotebook.domain.NoteEntity;
 import com.bogatovnikita.mynotebook.domain.Repository;
 
 public class NotepadPages extends AppCompatActivity {
@@ -23,6 +25,7 @@ public class NotepadPages extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad_pages);
+
         initToolbar();
 
         initRecyclerView();
@@ -60,10 +63,18 @@ public class NotepadPages extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void onItemClick(NoteEntity item) {
+        Intent intent = new Intent(this, NotePage.class);
+        intent.putExtra("clickItem", (Parcelable) item);
+        startActivity(intent);
+    }
+
     private void initRecyclerView() {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(this::onItemClick);
         adapter.setData(Repository.repo.getNotes());
+
     }
 }
