@@ -52,21 +52,20 @@ public class NotepadPages extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.new_note_menu) {
-            openNewNote();
+            openNewNote(null);
             return true;//возвращает истину, если обработали нажатие
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void openNewNote() {
+    private void openNewNote(NoteEntity item) {
         Intent intent = new Intent(this, NotePage.class);
+        intent.putExtra("clickItem", (Parcelable) item);
         startActivity(intent);
     }
 
     private void onItemClick(NoteEntity item) {
-        Intent intent = new Intent(this, NotePage.class);
-        intent.putExtra("clickItem", (Parcelable) item);
-        startActivity(intent);
+        openNewNote(item);
     }
 
     private void initRecyclerView() {
