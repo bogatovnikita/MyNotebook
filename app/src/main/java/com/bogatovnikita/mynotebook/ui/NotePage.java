@@ -20,17 +20,16 @@ public class NotePage extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_note_page);
+        setContentView(R.layout.note_page_activity);
 
         initView();
 
-        if (getIntent().getExtras() != null)
+        if (getIntent().getExtras() != null) {
             initItem();
-
-        savedNote();
+        }
     }
 
-    private void savedNote() {
+    private void initSaveBotton() {
         Button button = findViewById(R.id.save_note_button);
         button.setOnClickListener(view -> {
             String title = titleEditText.getText().toString();
@@ -51,5 +50,6 @@ public class NotePage extends AppCompatActivity {
     private void initView() {
         titleEditText = findViewById(R.id.title_edit_text);
         noteEditEditText = findViewById(R.id.note_text_edit_text);
+        initSaveBotton();
     }
 }
