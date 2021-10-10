@@ -1,7 +1,5 @@
 package com.bogatovnikita.mynotebook.impl;
 
-import androidx.annotation.Nullable;
-
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
 import com.bogatovnikita.mynotebook.domain.NotesRepo;
 
@@ -10,7 +8,6 @@ import java.util.List;
 
 public class NotesRepoImpl implements NotesRepo {
     private final ArrayList<NoteEntity> allNotes = new ArrayList<>();
-    private int counter = 0;
 
     @Override
     public List<NoteEntity> getNotes() {
@@ -18,30 +15,18 @@ public class NotesRepoImpl implements NotesRepo {
     }
 
     @Override
-    public boolean deleteNotes(int id) {
-        for (int i = 0; i < allNotes.size(); i++) {
-            if (allNotes.get(i).getId() == id) {
-                allNotes.remove(i);
-                counter--;
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Nullable
-    @Override
-    public Integer createNotes(NoteEntity note) {
-        note.setId(++counter);
-        allNotes.add(note);
-        return counter;
+    public void deleteNotes(NoteEntity note) {
+        allNotes.remove(note);
     }
 
     @Override
-    public boolean updateNotes(int id, NoteEntity note) {
-        deleteNotes(id);
-        note.setId(id);
+    public void createNotes(NoteEntity note) {
+        deleteNotes(note);
+        updateNotes(note);
+    }
+
+    @Override
+    public void updateNotes(NoteEntity note) {
         allNotes.add(note);
-        return true;
     }
 }

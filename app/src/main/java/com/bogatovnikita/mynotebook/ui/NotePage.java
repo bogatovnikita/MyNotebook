@@ -15,7 +15,7 @@ import com.bogatovnikita.mynotebook.domain.Repository;
 public class NotePage extends AppCompatActivity {
     EditText titleEditText;
     EditText noteEditEditText;
-    NoteEntity noteEntity;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,32 +24,24 @@ public class NotePage extends AppCompatActivity {
 
         initView();
 
-        if (getIntent().getExtras() != null) {
-            initItem();
-        }
+        initSaveButton();
+
     }
 
-    private void initSaveBotton() {
+    private void initSaveButton() {
         Button button = findViewById(R.id.save_note_button);
         button.setOnClickListener(view -> {
             String title = titleEditText.getText().toString();
             String noteEdit = noteEditEditText.getText().toString();
             if (!title.isEmpty() || !noteEdit.isEmpty())
-                Repository.repo.createNotes(new NoteEntity(null, title, noteEdit));
+                Repository.repo.createNotes(new NoteEntity(title, noteEdit));
             Intent intent = new Intent(NotePage.this, NotepadPages.class);
             startActivity(intent);
         });
     }
 
-    private void initItem() {
-        noteEntity = getIntent().getExtras().getParcelable("clickItem");
-        titleEditText.setText(noteEntity.getTitle());
-        noteEditEditText.setText(noteEntity.getNoteText());
-    }
-
     private void initView() {
         titleEditText = findViewById(R.id.title_edit_text);
         noteEditEditText = findViewById(R.id.note_text_edit_text);
-        initSaveBotton();
     }
 }
