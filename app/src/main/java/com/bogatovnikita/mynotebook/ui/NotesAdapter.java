@@ -1,5 +1,6 @@
 package com.bogatovnikita.mynotebook.ui;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     private List<NoteEntity> data = new ArrayList<>();
     private OnItemClickListener clickListener;
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setData(List<NoteEntity> data) {
         this.data = data;
         notifyDataSetChanged();

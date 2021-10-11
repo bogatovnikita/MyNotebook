@@ -31,10 +31,18 @@ public class NotePage extends AppCompatActivity {
     private void initSaveButton() {
         Button button = findViewById(R.id.save_note_button);
         button.setOnClickListener(view -> {
-            String title = titleEditText.getText().toString();
-            String noteEdit = noteEditEditText.getText().toString();
-            if (!title.isEmpty() || !noteEdit.isEmpty())
+            if (getIntent().getExtras() == null) {
+                String title = titleEditText.getText().toString();
+                String noteEdit = noteEditEditText.getText().toString();
+                if (!title.isEmpty() || !noteEdit.isEmpty()) {
+                    Repository.repo.updateNotes(new NoteEntity(title, noteEdit));
+                }
+            } else {
+                String title = titleEditText.getText().toString();
+                String noteEdit = noteEditEditText.getText().toString();
                 Repository.repo.createNotes(new NoteEntity(title, noteEdit));
+
+            }
             Intent intent = new Intent(NotePage.this, NotepadPages.class);
             startActivity(intent);
         });
@@ -43,5 +51,10 @@ public class NotePage extends AppCompatActivity {
     private void initView() {
         titleEditText = findViewById(R.id.title_edit_text);
         noteEditEditText = findViewById(R.id.note_text_edit_text);
+        if (getIntent().getExtras() != null) {
+            titleEditText.setText(getIntent().getStringExtra("title"));
+            noteEditEditText.setText(getIntent().getStringExtra("noteText"));
+            Repository.repo.deleteNotes(new NoteEntity(titleEditText.getText().toString(), noteEditEditText.getText().toString()));
+        }
     }
 }

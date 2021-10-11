@@ -2,7 +2,6 @@ package com.bogatovnikita.mynotebook.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -52,20 +51,26 @@ public class NotepadPages extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.new_note_menu) {
-            openNewNote(null);
+            openNewNote();
             return true;//возвращает истину, если обработали нажатие
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void openNewNote(NoteEntity item) {
+    private void openNewNote() {
         Intent intent = new Intent(this, NotePage.class);
-        intent.putExtra("clickItem", (Parcelable) item);
+        startActivity(intent);
+    }
+
+    private void openNote(NoteEntity item) {
+        Intent intent = new Intent(this, NotePage.class);
+        intent.putExtra("title", item.getTitle());
+        intent.putExtra("noteText", item.getNoteText());
         startActivity(intent);
     }
 
     private void onItemClick(NoteEntity item) {
-        openNewNote(item);
+        openNote(item);
     }
 
     private void initRecyclerView() {
@@ -74,6 +79,5 @@ public class NotepadPages extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this::onItemClick);
         adapter.setData(Repository.repo.getNotes());
-
     }
 }

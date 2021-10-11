@@ -21,7 +21,6 @@ public class NotesRepoImpl implements NotesRepo {
 
     @Override
     public void createNotes(NoteEntity note) {
-        deleteNotes(note);
         updateNotes(note);
     }
 
