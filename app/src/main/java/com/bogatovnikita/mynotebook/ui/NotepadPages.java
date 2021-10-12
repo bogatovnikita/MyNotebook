@@ -64,6 +64,7 @@ public class NotepadPages extends AppCompatActivity {
 
     private void openNote(NoteEntity item) {
         Intent intent = new Intent(this, NotePage.class);
+        intent.putExtra("id", item.getId());
         intent.putExtra("title", item.getTitle());
         intent.putExtra("noteText", item.getNoteText());
         startActivity(intent);

@@ -1,13 +1,28 @@
 package com.bogatovnikita.mynotebook.domain;
 
+import javax.annotation.Nullable;
+
 public class NoteEntity {
 
+    @Nullable
+    private Integer id;
     private String title;
     private String noteText;
 
-    public NoteEntity(String title, String noteText) {
+    public NoteEntity(@Nullable Integer id, String title, String noteText) {
+        this.id = id;
         this.title = title;
         this.noteText = noteText;
+    }
+
+    @Nullable
+    public Integer getId() {
+        return id;
+    }
+
+    @Nullable
+    public void setId(@Nullable Integer id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -25,5 +40,4 @@ public class NoteEntity {
     public void setNoteText(String noteText) {
         this.noteText = noteText;
     }
-
 }
