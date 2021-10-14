@@ -15,7 +15,7 @@ import com.bogatovnikita.mynotebook.R;
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
 import com.bogatovnikita.mynotebook.domain.Repository;
 
-public class NotepadPages extends AppCompatActivity {
+public class NotepadPagesActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private NotesAdapter adapter = new NotesAdapter();
@@ -58,12 +58,12 @@ public class NotepadPages extends AppCompatActivity {
     }
 
     private void openNewNote() {
-        Intent intent = new Intent(this, NotePage.class);
+        Intent intent = new Intent(this, NotePageActivity.class);
         startActivity(intent);
     }
 
     private void openNote(NoteEntity item) {
-        Intent intent = new Intent(this, NotePage.class);
+        Intent intent = new Intent(this, NotePageActivity.class);
         intent.putExtra("id", item.getId());
         intent.putExtra("title", item.getTitle());
         intent.putExtra("noteText", item.getNoteText());

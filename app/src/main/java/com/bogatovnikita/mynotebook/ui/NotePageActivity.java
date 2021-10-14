@@ -12,7 +12,7 @@ import com.bogatovnikita.mynotebook.R;
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
 import com.bogatovnikita.mynotebook.domain.Repository;
 
-public class NotePage extends AppCompatActivity {
+public class NotePageActivity extends AppCompatActivity {
     Integer id;
     EditText titleEditText;
     EditText noteEditEditText;
@@ -37,14 +37,14 @@ public class NotePage extends AppCompatActivity {
             String noteEdit = noteEditEditText.getText().toString();
             Repository.repo.createNotes(new NoteEntity(id, title, noteEdit));
 
-            Intent intent = new Intent(NotePage.this, NotepadPages.class);
+            Intent intent = new Intent(NotePageActivity.this, NotepadPagesActivity.class);
             startActivity(intent);
         });
     }
 
     private void initView() {
         titleEditText = findViewById(R.id.title_edit_text);
-        noteEditEditText = findViewById(R.id.note_text_edit_text);
+        noteEditEditText = findViewById(R.id.note_edit_text);
         if (getIntent().getExtras() != null) {
             id = getIntent().getIntExtra("id", 1);
             titleEditText.setText(getIntent().getStringExtra("title"));
