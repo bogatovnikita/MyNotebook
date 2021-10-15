@@ -1,6 +1,5 @@
 package com.bogatovnikita.mynotebook.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -8,17 +7,12 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bogatovnikita.mynotebook.R;
-import com.bogatovnikita.mynotebook.domain.NoteEntity;
-import com.bogatovnikita.mynotebook.domain.Repository;
 
 public class NotepadPagesActivity extends AppCompatActivity {
     private Toolbar toolbar;
-    private RecyclerView recyclerView;
-    private NotesAdapter adapter = new NotesAdapter();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,59 +20,34 @@ public class NotepadPagesActivity extends AppCompatActivity {
         setContentView(R.layout.notepad_pages_activity);
 
         initToolbar();
-
-        initRecyclerView();
+        initNotepadPageFragment();
     }
 
     private void initToolbar() {
         toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);//заменяем штатный тулбар своим
+        setSupportActionBar(toolbar);
     }
 
-    /**
-     * метод для работы меню
-     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.notes_list_menu, menu);
-        return true;//возвращает истину, если меню создано
+        return true;
     }
 
-    /**
-     * метод для работы меню
-     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.new_note_menu) {
-            openNewNote();
-            return true;//возвращает истину, если обработали нажатие
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void openNewNote() {
-        Intent intent = new Intent(this, NotePageActivity.class);
-        startActivity(intent);
+    private void initNotepadPageFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_notepad_page_container, new NotepadPagesFragment())
+                .commit();
     }
 
-    private void openNote(NoteEntity item) {
-        Intent intent = new Intent(this, NotePageActivity.class);
-        intent.putExtra("id", item.getId());
-        intent.putExtra("title", item.getTitle());
-        intent.putExtra("noteText", item.getNoteText());
-        startActivity(intent);
-    }
-
-    private void onItemClick(NoteEntity item) {
-        openNote(item);
-    }
-
-    private void initRecyclerView() {
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(this::onItemClick);
-        adapter.setData(Repository.repo.getNotes());
-    }
 }
