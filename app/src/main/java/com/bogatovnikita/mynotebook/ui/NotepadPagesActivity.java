@@ -2,7 +2,6 @@ package com.bogatovnikita.mynotebook.ui;
 
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,14 +12,13 @@ import com.bogatovnikita.mynotebook.R;
 public class NotepadPagesActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notepad_pages_activity);
+        setContentView(R.layout.notepad_list_activity);
 
         initToolbar();
-        initNotepadPageFragment();
+        initNotepadListFragment();
     }
 
     private void initToolbar() {
@@ -30,24 +28,32 @@ public class NotepadPagesActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.notes_list_menu, menu);
+        getMenuInflater().inflate(R.menu.notes_list_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.new_note_menu) {
+            initNotePageScreenFragment();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void initNotepadPageFragment() {
+    private void initNotepadListFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_notepad_page_container, new NotepadPagesFragment())
+                .add(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
                 .commit();
+    }
+
+    private void initNotePageScreenFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_notepad_list_container, new NotePageFragment())
+                .commit();
+
     }
 
 }
