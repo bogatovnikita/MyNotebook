@@ -45,7 +45,7 @@ public class NotepadPagesFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.new_note_menu) {
             getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_notepad_list_container, notePageFragment)
+                    .add(R.id.fragment_notepad_list_container, notePageFragment)
                     .addToBackStack(null)
                     .commit();
         }
@@ -54,7 +54,6 @@ public class NotepadPagesFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Repository.repo.createNotes(new NoteEntity(1, "sdfsf", "noteEdit"));
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -70,10 +69,9 @@ public class NotepadPagesFragment extends Fragment {
         bundle.putString("noteText", item.getNoteText());
         notePageFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_notepad_list_container, notePageFragment)
+                .add(R.id.fragment_notepad_list_container, notePageFragment)
                 .addToBackStack(null)
                 .commit();
     }
-
 }
 

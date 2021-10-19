@@ -36,13 +36,16 @@ public class NotePageFragment extends Fragment {
             titleEditText.setText(getArguments().getString("title"));
             noteEditEditText.setText(getArguments().getString("noteText"));
             Repository.repo.deleteNotes(id);
-        } else {
-            Button button = view.findViewById(R.id.save_note_button);
-            button.setOnClickListener(view1 -> {
-                String title = titleEditText.getText().toString();
-                String noteEdit = noteEditEditText.getText().toString();
-                Repository.repo.createNotes(new NoteEntity(id, title, noteEdit));
-            });
         }
+
+        Button button = view.findViewById(R.id.save_note_button);
+        button.setOnClickListener(view1 -> {
+
+            String title = titleEditText.getText().toString();
+            String noteEdit = noteEditEditText.getText().toString();
+
+            Repository.repo.createNotes(new NoteEntity(id, title, noteEdit));
+
+        });
     }
 }
