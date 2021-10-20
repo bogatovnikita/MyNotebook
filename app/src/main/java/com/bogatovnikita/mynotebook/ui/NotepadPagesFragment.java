@@ -1,5 +1,6 @@
 package com.bogatovnikita.mynotebook.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,14 +20,31 @@ import com.bogatovnikita.mynotebook.domain.NoteEntity;
 import com.bogatovnikita.mynotebook.domain.Repository;
 
 public class NotepadPagesFragment extends Fragment {
+    private Contract contract;
     private RecyclerView recyclerView;
     private NotesAdapter adapter = new NotesAdapter();
-    NotePageFragment notePageFragment = new NotePageFragment();
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof Contract) {
+            contract = (Contract) context;
+        } else {
+            throw new IllegalStateException("Activity must implement NotepadPagesFragment.Contract");
+        }
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_notepad_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        recyclerView = view.findViewById(R.id.recycler_view);
+        initRecyclerView();
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
@@ -44,34 +62,30 @@ public class NotepadPagesFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.new_note_menu) {
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_notepad_list_container, notePageFragment)
-                    .addToBackStack(null)
-                    .commit();
+            contract.openNewNote();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    interface Contract {
+        void openNewNote();
+    }
+
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    public void onDestroy() {
+        contract = null;
+        super.onDestroy();
+    }
+
+    private void initRecyclerView() {
+        recyclerView.setLayoutManager(new LinearLayoutManager((Context) contract));
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this::onItemClick);
         adapter.setData(Repository.repo.getNotes());
     }
 
     private void onItemClick(NoteEntity item) {
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", item.getId());
-        bundle.putString("title", item.getTitle());
-        bundle.putString("noteText", item.getNoteText());
-        notePageFragment.setArguments(bundle);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_notepad_list_container, notePageFragment)
-                .addToBackStack(null)
-                .commit();
+        contract.openNewNote();
     }
 }
 
