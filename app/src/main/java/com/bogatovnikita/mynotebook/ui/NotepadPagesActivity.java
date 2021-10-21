@@ -16,21 +16,6 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
         setContentView(R.layout.notepad_list_activity);
 
         Repository.repo.createNotes(new NoteEntity(null, "Заметка 1", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 2", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 3", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 4", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 1", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 2", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 3", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 4", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 1", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 2", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 3", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 4", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 1", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 2", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 3", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 4", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
         initNotepadListFragment();
     }
 
