@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -13,12 +12,14 @@ import androidx.fragment.app.Fragment;
 
 import com.bogatovnikita.mynotebook.R;
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
-import com.bogatovnikita.mynotebook.domain.Repository;
 
 public class NotePageFragment extends Fragment {
     Integer id;
     EditText titleEditText;
     EditText noteEditEditText;
+    private static final String TITLE_TEXT = "TITLE_TEXT";
+    private static final String NOTE_TEXT = "NOTE_TEXT";
+
 
     @Nullable
     @Override
@@ -31,21 +32,24 @@ public class NotePageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         titleEditText = view.findViewById(R.id.title_edit_text);
         noteEditEditText = view.findViewById(R.id.note_edit_text);
-        if (getArguments() != null) {
-            id = getArguments().getInt("id");
-            titleEditText.setText(getArguments().getString("title"));
-            noteEditEditText.setText(getArguments().getString("noteText"));
-            Repository.repo.deleteNotes(id);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            String titleText = args.getString(TITLE_TEXT);
+            String noteText = args.getString(NOTE_TEXT);
+            titleEditText.setText(titleText);
+            noteEditEditText.setText(noteText);
         }
+    }
 
-        Button button = view.findViewById(R.id.save_note_button);
-        button.setOnClickListener(view1 -> {
-
-            String title = titleEditText.getText().toString();
-            String noteEdit = noteEditEditText.getText().toString();
-
-            Repository.repo.createNotes(new NoteEntity(id, title, noteEdit));
-
-        });
+    public static NotePageFragment newInstance(NoteEntity item) {
+        NotePageFragment notePageFragment = new NotePageFragment();
+        if (item != null) {
+            Bundle bundle = new Bundle();
+            bundle.putString(TITLE_TEXT, item.getTitle());
+            bundle.putString(NOTE_TEXT, item.getNoteText());
+            notePageFragment.setArguments(bundle);
+        }
+        return notePageFragment;
     }
 }

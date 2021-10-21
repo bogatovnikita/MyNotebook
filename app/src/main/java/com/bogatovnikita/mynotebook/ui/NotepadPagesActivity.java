@@ -42,10 +42,10 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     }
 
     @Override
-    public void openNewNote() {
+    public void openNewNote(NoteEntity item) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_notepad_list_container, new NotePageFragment())
+                .add(R.id.fragment_notepad_list_container, NotePageFragment.newInstance(item))
                 .addToBackStack(null)
                 .commit();
     }

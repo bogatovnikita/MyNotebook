@@ -62,13 +62,13 @@ public class NotepadPagesFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.new_note_menu) {
-            contract.openNewNote();
+            contract.openNewNote(null);
         }
         return super.onOptionsItemSelected(item);
     }
 
     interface Contract {
-        void openNewNote();
+        void openNewNote(NoteEntity item);
     }
 
     @Override
@@ -85,7 +85,7 @@ public class NotepadPagesFragment extends Fragment {
     }
 
     private void onItemClick(NoteEntity item) {
-        contract.openNewNote();
+        contract.openNewNote(item);
     }
 }
 
