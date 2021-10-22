@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bogatovnikita.mynotebook.R;
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
-import com.bogatovnikita.mynotebook.domain.Repository;
 
 public class NotepadPagesActivity extends AppCompatActivity implements NotepadPagesFragment.Contract {
 
@@ -15,7 +14,6 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notepad_list_activity);
 
-        Repository.repo.createNotes(new NoteEntity(null, "Заметка 1", "Это очень длинная заметка аааааааааааааааааааааааааааааааааааа"));
         initNotepadListFragment();
     }
 

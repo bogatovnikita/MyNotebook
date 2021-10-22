@@ -22,7 +22,7 @@ import com.bogatovnikita.mynotebook.domain.Repository;
 public class NotepadPagesFragment extends Fragment {
     private Contract contract;
     private RecyclerView recyclerView;
-    private NotesAdapter adapter = new NotesAdapter();
+    private final NotesAdapter adapter = new NotesAdapter();
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -77,7 +77,7 @@ public class NotepadPagesFragment extends Fragment {
         super.onDestroy();
     }
 
-    private void initRecyclerView() {
+    public void initRecyclerView() {
         recyclerView.setLayoutManager(new LinearLayoutManager((Context) contract));
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this::onItemClick);

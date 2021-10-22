@@ -23,7 +23,6 @@ public class NotePageFragment extends Fragment {
     private static final String NOTE_TEXT = "NOTE_TEXT";
     Button saveNoteButton;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -49,9 +48,7 @@ public class NotePageFragment extends Fragment {
             String title = titleEditText.getText().toString();
             String note = noteEditText.getText().toString();
             Repository.repo.createNotes(new NoteEntity(id, title, note));
-            getActivity().getSupportFragmentManager().popBackStack();
         });
-
     }
 
     public static NotePageFragment newInstance(NoteEntity item) {
