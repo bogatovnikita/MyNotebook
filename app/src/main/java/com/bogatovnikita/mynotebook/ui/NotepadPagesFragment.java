@@ -50,14 +50,13 @@ public class NotepadPagesFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setHasOptionsMenu(true);
-        }
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.notes_list_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -72,6 +71,7 @@ public class NotepadPagesFragment extends Fragment {
 
     interface Contract {
         void openNewNote(NoteEntity item);
+
         void openNewNoteLand(NoteEntity item);
     }
 

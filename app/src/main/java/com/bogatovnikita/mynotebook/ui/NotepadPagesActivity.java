@@ -14,6 +14,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notepad_list_activity);
+
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             initNotepadListFragment();
         } else {
@@ -34,7 +35,6 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_notepad_list_container, NotePageFragment.newInstance(item))
-                .addToBackStack(null)
                 .commit();
     }
 
@@ -43,7 +43,6 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_notepad_list_container_two, NotePageFragment.newInstance(item))
-                .addToBackStack(null)
                 .commit();
     }
 
