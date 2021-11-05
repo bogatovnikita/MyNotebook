@@ -1,5 +1,6 @@
 package com.bogatovnikita.mynotebook.ui;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,11 +49,20 @@ public class NotePageFragment extends Fragment {
             String title = titleEditText.getText().toString();
             String note = noteEditText.getText().toString();
             Repository.repo.createNotes(new NoteEntity(id, title, note));
-            getActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
-                    .remove(this)
-                    .commit();
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
+                        .remove(this)
+                        .commit();
+
+            } else {
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
+                        .replace(R.id.fragment_notepad_list_container_two, new NotePageFragment())
+                        .commit();
+            }
         });
     }
 

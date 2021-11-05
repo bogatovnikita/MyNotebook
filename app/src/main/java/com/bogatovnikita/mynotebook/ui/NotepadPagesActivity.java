@@ -1,5 +1,6 @@
 package com.bogatovnikita.mynotebook.ui;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +14,12 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notepad_list_activity);
-
-        initNotepadListFragment();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            initNotepadListFragment();
+        } else {
+            initNotepadListFragmentLand();
+            openNewNoteLand(null);
+        }
     }
 
     protected void initNotepadListFragment() {
@@ -30,6 +35,22 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
                 .beginTransaction()
                 .add(R.id.fragment_notepad_list_container, NotePageFragment.newInstance(item))
                 .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void openNewNoteLand(NoteEntity item) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_notepad_list_container_two, NotePageFragment.newInstance(item))
+                .addToBackStack(null)
+                .commit();
+    }
+
+    protected void initNotepadListFragmentLand() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
                 .commit();
     }
 }

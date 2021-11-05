@@ -1,6 +1,7 @@
 package com.bogatovnikita.mynotebook.ui;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,7 +50,9 @@ public class NotepadPagesFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        setHasOptionsMenu(true);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setHasOptionsMenu(true);
+        }
         super.onCreate(savedInstanceState);
     }
 
@@ -69,6 +72,7 @@ public class NotepadPagesFragment extends Fragment {
 
     interface Contract {
         void openNewNote(NoteEntity item);
+        void openNewNoteLand(NoteEntity item);
     }
 
     @Override
@@ -85,7 +89,12 @@ public class NotepadPagesFragment extends Fragment {
     }
 
     private void onItemClick(NoteEntity item) {
-        contract.openNewNote(item);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            contract.openNewNote(item);
+        } else {
+            contract.openNewNoteLand(item);
+        }
+
     }
 }
 
