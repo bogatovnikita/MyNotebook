@@ -48,6 +48,11 @@ public class NotePageFragment extends Fragment {
             String title = titleEditText.getText().toString();
             String note = noteEditText.getText().toString();
             Repository.repo.createNotes(new NoteEntity(id, title, note));
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
+                    .remove(this)
+                    .commit();
         });
     }
 
