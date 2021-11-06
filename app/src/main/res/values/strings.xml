@@ -10,4 +10,5 @@
     <string name="about_application">О приложении</string>
     <string name="about_text">В данном разделе описывается вся боль создания этого блокнота. Боль которую автор получил создавая его. В буквальном смысле познал все муки рождения нового приложения.</string>
     <string name="about_title_text">О приложении</string>
+    <string name="setting_text">Привет. Я меню настроек. Но меня еще не сотворили, но я очень этого хочу.</string>
 </resources>

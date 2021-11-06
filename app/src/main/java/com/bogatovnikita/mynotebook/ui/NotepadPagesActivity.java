@@ -61,10 +61,26 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
                 .commit();
     }
 
+    public void openSettingsFragmentLand() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_notepad_list_container_two, new SettingsFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
     public void openAboutApplicationFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_notepad_list_container, new AboutApplicationFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void openAboutApplicationFragmentLand() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_notepad_list_container_two, new AboutApplicationFragment())
                 .addToBackStack(null)
                 .commit();
     }
