@@ -26,7 +26,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     protected void initNotepadListFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
+                .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
                 .commit();
     }
 
@@ -34,7 +34,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     public void openNewNote(NoteEntity item) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_notepad_list_container, NotePageFragment.newInstance(item))
+                .replace(R.id.fragment_notepad_list_container, NotePageFragment.newInstance(item))
                 .commit();
     }
 
@@ -42,14 +42,31 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     public void openNewNoteLand(NoteEntity item) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_notepad_list_container_two, NotePageFragment.newInstance(item))
+                .replace(R.id.fragment_notepad_list_container_two, NotePageFragment.newInstance(item))
                 .commit();
     }
 
     protected void initNotepadListFragmentLand() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
+                .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
                 .commit();
     }
+
+    public void openSettingsFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_notepad_list_container, new SettingsFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void openAboutApplicationFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_notepad_list_container, new AboutApplicationFragment())
+                .addToBackStack(null)
+                .commit();
+    }
+
 }

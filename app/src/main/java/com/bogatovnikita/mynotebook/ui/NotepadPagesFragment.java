@@ -66,6 +66,12 @@ public class NotepadPagesFragment extends Fragment {
         if (item.getItemId() == R.id.new_note_menu) {
             contract.openNewNote(null);
         }
+        if (item.getItemId() == R.id.setting_menu) {
+            contract.openSettingsFragment();
+        }
+        if (item.getItemId() == R.id.setting_about_application_menu) {
+            contract.openAboutApplicationFragment();
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -73,6 +79,10 @@ public class NotepadPagesFragment extends Fragment {
         void openNewNote(NoteEntity item);
 
         void openNewNoteLand(NoteEntity item);
+
+        void openSettingsFragment();
+
+        void openAboutApplicationFragment();
     }
 
     @Override

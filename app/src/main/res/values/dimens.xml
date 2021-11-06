@@ -23,4 +23,6 @@
     <dimen name="corner_radius">@dimen/large_radius</dimen>
 
     <dimen name="card_elevation">@dimen/small_elevation</dimen>
+
+    <dimen name="text_size_about">@dimen/large_text</dimen>
 </resources>
