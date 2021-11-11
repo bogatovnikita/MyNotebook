@@ -16,7 +16,7 @@ public class NoteViewHolder extends RecyclerView.ViewHolder {
     private final TextView noteTextView = itemView.findViewById(R.id.note_text_view);
     private NoteEntity noteEntity = null;
 
-    public NoteViewHolder(@NonNull ViewGroup parent, NotesAdapter.OnItemClickListener clickListener) {
+    public NoteViewHolder(@NonNull ViewGroup parent, OnItemClickListener clickListener) {
         super(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note_activity, parent, false));
         itemView.setOnClickListener(view -> clickListener.onItemClick(noteEntity));
     }

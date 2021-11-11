@@ -3,12 +3,14 @@ package com.bogatovnikita.mynotebook.ui;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +54,11 @@ public class NotepadPagesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
     }
 
     @Override
@@ -109,12 +116,29 @@ public class NotepadPagesFragment extends Fragment {
     }
 
     private void onItemClick(NoteEntity item) {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            contract.openNewNote(item);
-        } else {
-            contract.openNewNoteLand(item);
-        }
+        showContextMenu(item);
+//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            contract.openNewNote(item);
+//        } else {
+//            contract.openNewNoteLand(item);
+//        }
+    }
 
+    private void showContextMenu(NoteEntity item) {
+        recyclerView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
+            @Override
+            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
+                getActivity().getMenuInflater().inflate(R.menu.popup_notes_list_menu, contextMenu);
+                contextMenu.findItem(R.id.delete_note_popup_menu).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        Toast.makeText(getContext(), "Выбрал удалить", Toast.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+            }
+        });
+        recyclerView.showContextMenu();
     }
 }
 
