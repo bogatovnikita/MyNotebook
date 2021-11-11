@@ -125,18 +125,12 @@ public class NotepadPagesFragment extends Fragment {
     }
 
     private void showContextMenu(NoteEntity item) {
-        recyclerView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
-            @Override
-            public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-                getActivity().getMenuInflater().inflate(R.menu.popup_notes_list_menu, contextMenu);
-                contextMenu.findItem(R.id.delete_note_popup_menu).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        Toast.makeText(getContext(), "Выбрал удалить", Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                });
-            }
+        recyclerView.setOnCreateContextMenuListener((contextMenu, view, contextMenuInfo) -> {
+            getActivity().getMenuInflater().inflate(R.menu.popup_notes_list_menu, contextMenu);
+            contextMenu.findItem(R.id.delete_note_popup_menu).setOnMenuItemClickListener(menuItem -> {
+                Toast.makeText(getContext(), "Выбрал удалить", Toast.LENGTH_SHORT).show();
+                return true;
+            });
         });
         recyclerView.showContextMenu();
     }
