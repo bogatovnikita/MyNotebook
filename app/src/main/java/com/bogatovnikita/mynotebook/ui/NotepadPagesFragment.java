@@ -3,7 +3,6 @@ package com.bogatovnikita.mynotebook.ui;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,10 +55,10 @@ public class NotepadPagesFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }
+//    @Override
+//    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//    }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
@@ -117,18 +116,25 @@ public class NotepadPagesFragment extends Fragment {
 
     private void onItemClick(NoteEntity item) {
         showContextMenu(item);
-//        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            contract.openNewNote(item);
-//        } else {
-//            contract.openNewNoteLand(item);
-//        }
     }
 
     private void showContextMenu(NoteEntity item) {
         recyclerView.setOnCreateContextMenuListener((contextMenu, view, contextMenuInfo) -> {
             getActivity().getMenuInflater().inflate(R.menu.popup_notes_list_menu, contextMenu);
+            Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+
             contextMenu.findItem(R.id.delete_note_popup_menu).setOnMenuItemClickListener(menuItem -> {
-                Toast.makeText(getContext(), "Выбрал удалить", Toast.LENGTH_SHORT).show();
+                Repository.repo.deleteNotes(item.getId());
+                adapter.setData(Repository.repo.getNotes());
+                return true;
+            });
+
+            contextMenu.findItem(R.id.change_note_popup_menu).setOnMenuItemClickListener(menuItem -> {
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    contract.openNewNote(item);
+                } else {
+                    contract.openNewNoteLand(item);
+                }
                 return true;
             });
         });
