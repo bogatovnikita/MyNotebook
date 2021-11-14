@@ -5,6 +5,6 @@
         android:id="@+id/new_note_menu"
         android:icon="@drawable/ic_baseline_add_24"
         android:title="@string/add_new_page"
-        app:showAsAction="always" />
-
+        app:showAsAction="never"
+         />
 </menu>

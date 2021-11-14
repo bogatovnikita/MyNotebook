@@ -1,84 +1,56 @@
 package com.bogatovnikita.mynotebook.ui;
 
-import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bogatovnikita.mynotebook.R;
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
-import com.bogatovnikita.mynotebook.domain.Repository;
 
-public class NotepadPagesActivity extends AppCompatActivity {
-    private Toolbar toolbar;
-    private RecyclerView recyclerView;
-    private NotesAdapter adapter = new NotesAdapter();
+public class NotepadPagesActivity extends AppCompatActivity implements NotepadPagesFragment.Contract {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notepad_pages_activity);
-
-        initToolbar();
-
-        initRecyclerView();
-    }
-
-    private void initToolbar() {
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);//заменяем штатный тулбар своим
-    }
-
-    /**
-     * метод для работы меню
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.notes_list_menu, menu);
-        return true;//возвращает истину, если меню создано
-    }
-
-    /**
-     * метод для работы меню
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.new_note_menu) {
-            openNewNote();
-            return true;//возвращает истину, если обработали нажатие
+        setContentView(R.layout.notepad_list_activity);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            initNotepadListFragment();
+        } else {
+            initNotepadListFragmentLand();
+            openNewNoteLand(null);
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    private void openNewNote() {
-        Intent intent = new Intent(this, NotePageActivity.class);
-        startActivity(intent);
+    protected void initNotepadListFragment() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
+                .commit();
     }
 
-    private void openNote(NoteEntity item) {
-        Intent intent = new Intent(this, NotePageActivity.class);
-        intent.putExtra("id", item.getId());
-        intent.putExtra("title", item.getTitle());
-        intent.putExtra("noteText", item.getNoteText());
-        startActivity(intent);
+    @Override
+    public void openNewNote(NoteEntity item) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_notepad_list_container, NotePageFragment.newInstance(item))
+                .addToBackStack(null)
+                .commit();
     }
 
-    private void onItemClick(NoteEntity item) {
-        openNote(item);
+    @Override
+    public void openNewNoteLand(NoteEntity item) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_notepad_list_container_two, NotePageFragment.newInstance(item))
+                .addToBackStack(null)
+                .commit();
     }
 
-    private void initRecyclerView() {
-        recyclerView = findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(this::onItemClick);
-        adapter.setData(Repository.repo.getNotes());
+    protected void initNotepadListFragmentLand() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
+                .commit();
     }
 }

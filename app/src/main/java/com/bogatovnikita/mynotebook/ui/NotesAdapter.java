@@ -1,14 +1,11 @@
 package com.bogatovnikita.mynotebook.ui;
 
 import android.annotation.SuppressLint;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bogatovnikita.mynotebook.R;
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
 
 import java.util.ArrayList;
@@ -27,16 +24,13 @@ public class NotesAdapter extends RecyclerView.Adapter<NoteViewHolder> {
     @NonNull
     @Override
     public NoteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_note_activity, parent, false);
-        return new NoteViewHolder(view);
+        return new NoteViewHolder(parent, clickListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull NoteViewHolder holder, int position) {
         NoteEntity note = getItem(position);
-        holder.itemView.setOnClickListener(view -> clickListener.onItemClick(note));
-        holder.titleTextView.setText(note.getTitle());
-        holder.noteTextView.setText(note.getNoteText());
+        holder.bind(note);
     }
 
     private NoteEntity getItem(int position) {
