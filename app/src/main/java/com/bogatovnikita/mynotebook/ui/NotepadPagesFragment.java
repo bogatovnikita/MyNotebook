@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -50,14 +51,18 @@ public class NotepadPagesFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            setHasOptionsMenu(true);
-        }
+        setHasOptionsMenu(true);
         super.onCreate(savedInstanceState);
     }
 
+//    @Override
+//    public void onCreateContextMenu(@NonNull ContextMenu menu, @NonNull View v, @Nullable ContextMenu.ContextMenuInfo menuInfo) {
+//        super.onCreateContextMenu(menu, v, menuInfo);
+//    }
+
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.notes_list_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -67,12 +72,33 @@ public class NotepadPagesFragment extends Fragment {
         if (item.getItemId() == R.id.new_note_menu) {
             contract.openNewNote(null);
         }
+
+        if (item.getItemId() == R.id.setting_menu && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            contract.openSettingsFragment();
+        } else if (item.getItemId() == R.id.setting_menu) {
+            contract.openSettingsFragmentLand();
+        }
+
+        if (item.getItemId() == R.id.about_application_menu && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            contract.openAboutApplicationFragment();
+        } else if (item.getItemId() == R.id.about_application_menu) {
+            contract.openAboutApplicationFragmentLand();
+        }
         return super.onOptionsItemSelected(item);
     }
 
     interface Contract {
         void openNewNote(NoteEntity item);
+
         void openNewNoteLand(NoteEntity item);
+
+        void openSettingsFragment();
+
+        void openSettingsFragmentLand();
+
+        void openAboutApplicationFragment();
+
+        void openAboutApplicationFragmentLand();
     }
 
     @Override
@@ -89,12 +115,30 @@ public class NotepadPagesFragment extends Fragment {
     }
 
     private void onItemClick(NoteEntity item) {
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            contract.openNewNote(item);
-        } else {
-            contract.openNewNoteLand(item);
-        }
+        showContextMenu(item);
+    }
 
+    private void showContextMenu(NoteEntity item) {
+        recyclerView.setOnCreateContextMenuListener((contextMenu, view, contextMenuInfo) -> {
+            getActivity().getMenuInflater().inflate(R.menu.popup_notes_list_menu, contextMenu);
+            Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
+
+            contextMenu.findItem(R.id.delete_note_popup_menu).setOnMenuItemClickListener(menuItem -> {
+                Repository.repo.deleteNotes(item.getId());
+                adapter.setData(Repository.repo.getNotes());
+                return true;
+            });
+
+            contextMenu.findItem(R.id.change_note_popup_menu).setOnMenuItemClickListener(menuItem -> {
+                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    contract.openNewNote(item);
+                } else {
+                    contract.openNewNoteLand(item);
+                }
+                return true;
+            });
+        });
+        recyclerView.showContextMenu();
     }
 }
 
