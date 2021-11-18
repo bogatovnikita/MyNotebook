@@ -13,4 +13,10 @@
     <string name="setting_text">Привет. Я меню настроек. Но меня еще не сотворили, но я очень этого хочу.</string>
     <string name="delete_note_menu">Удалить заметку</string>
     <string name="change_note_menu">Изменить заметку</string>
+    <string name="Exit">Exit</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="press_back_exit">Нажмите еще раз кнопку назад для выхода</string>
+
 </resources>

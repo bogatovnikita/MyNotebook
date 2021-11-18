@@ -115,7 +115,7 @@ public class NotepadPagesFragment extends Fragment {
 
     private void showContextMenu(NoteEntity item) {
         recyclerView.setOnCreateContextMenuListener((contextMenu, view, contextMenuInfo) -> {
-            getActivity().getMenuInflater().inflate(R.menu.popup_notes_list_menu, contextMenu);
+            requireActivity().getMenuInflater().inflate(R.menu.popup_notes_list_menu, contextMenu);
             Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
 
             contextMenu.findItem(R.id.delete_note_popup_menu).setOnMenuItemClickListener(menuItem -> {
@@ -135,5 +135,6 @@ public class NotepadPagesFragment extends Fragment {
         });
         recyclerView.showContextMenu();
     }
+
 }
 

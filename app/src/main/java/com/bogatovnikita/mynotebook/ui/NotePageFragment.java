@@ -50,14 +50,14 @@ public class NotePageFragment extends Fragment {
             String note = noteEditText.getText().toString();
             Repository.repo.createNotes(new NoteEntity(id, title, note));
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                getActivity().getSupportFragmentManager()
+                requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
                         .remove(this)
                         .commit();
 
             } else {
-                getActivity().getSupportFragmentManager()
+                requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
                         .replace(R.id.fragment_notepad_list_container_two, new NotePageFragment())
