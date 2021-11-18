@@ -18,6 +18,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="press_back_exit">Нажмите еще раз кнопку назад для выхода</string>
-    <string name="dialog_delete_note">Вы уверены, что хотите удалить заметку</string>
+    <string name="dialog_delete_note">Вы уверены, что хотите удалить заметку %1$s</string>
 
 </resources>

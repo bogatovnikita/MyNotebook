@@ -1,8 +1,8 @@
 package com.bogatovnikita.mynotebook.ui;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -136,15 +136,15 @@ public class NotepadPagesFragment extends Fragment {
     }
 
     private void dialogDeleteNoteScreen(NoteEntity item) {
+        String titleNameNote = item.getTitle() + "?";
+        Resources resources = getResources();
+        String temp = String.format(resources.getString(R.string.dialog_delete_note), titleNameNote);
         new AlertDialog.Builder(requireContext()).setIcon(R.drawable.ic_baseline_exit_to_app_24)
-                .setTitle(R.string.dialog_delete_note)
-                .setMessage(item.getTitle() + "?")
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Repository.repo.deleteNotes(item.getId());
-                        adapter.setData(Repository.repo.getNotes());
-                    }
+                .setTitle(R.string.delete_note)
+                .setMessage(temp)
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
+                    Repository.repo.deleteNotes(item.getId());
+                    adapter.setData(Repository.repo.getNotes());
                 }).setNegativeButton(R.string.no, null).show();
     }
 
