@@ -90,13 +90,13 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this).setIcon(R.drawable.ic_baseline_exit_to_app_24)
-                .setTitle(R.string.Exit)
+                .setTitle(R.string.exit)
                 .setMessage(R.string.are_you_sure)
-                .setPositiveButton(R.string.Yes, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finishAndRemoveTask();
                     }
-                }).setNegativeButton(R.string.No, null).show();
+                }).setNegativeButton(R.string.no, null).show();
     }
 }

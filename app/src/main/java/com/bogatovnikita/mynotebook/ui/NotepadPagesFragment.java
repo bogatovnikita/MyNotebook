@@ -1,6 +1,7 @@
 package com.bogatovnikita.mynotebook.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,10 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -116,11 +117,9 @@ public class NotepadPagesFragment extends Fragment {
     private void showContextMenu(NoteEntity item) {
         recyclerView.setOnCreateContextMenuListener((contextMenu, view, contextMenuInfo) -> {
             requireActivity().getMenuInflater().inflate(R.menu.popup_notes_list_menu, contextMenu);
-            Toast.makeText(getContext(), item.getTitle(), Toast.LENGTH_SHORT).show();
 
             contextMenu.findItem(R.id.delete_note_popup_menu).setOnMenuItemClickListener(menuItem -> {
-                Repository.repo.deleteNotes(item.getId());
-                adapter.setData(Repository.repo.getNotes());
+                dialogDeleteNoteScreen(item);
                 return true;
             });
 
@@ -134,6 +133,19 @@ public class NotepadPagesFragment extends Fragment {
             });
         });
         recyclerView.showContextMenu();
+    }
+
+    private void dialogDeleteNoteScreen(NoteEntity item) {
+        new AlertDialog.Builder(requireContext()).setIcon(R.drawable.ic_baseline_exit_to_app_24)
+                .setTitle(R.string.dialog_delete_note)
+                .setMessage(item.getTitle() + "?")
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Repository.repo.deleteNotes(item.getId());
+                        adapter.setData(Repository.repo.getNotes());
+                    }
+                }).setNegativeButton(R.string.no, null).show();
     }
 
 }
