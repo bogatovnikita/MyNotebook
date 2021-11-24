@@ -3,6 +3,7 @@ package com.bogatovnikita.mynotebook.ui;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -30,6 +31,7 @@ public class NotePageFragment extends Fragment {
     EditText noteEditText;
     private static final String TITLE_TEXT = "TITLE_TEXT";
     private static final String NOTE_TEXT = "NOTE_TEXT";
+    private static final String ID_NOTE = "ID_NOTE";
     Button saveNoteButton;
     public static final String CHANNEL_ID = "CHANNEL_ID";
     public static final int ID_NOTIFICATION = 24;
@@ -38,6 +40,15 @@ public class NotePageFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_note_page_screen, container, false);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        Bundle args = getArguments();
+        if (args != null) {
+            ((Repository) getActivity().getApplication()).getRepo().deleteNotes(args.getInt(ID_NOTE));
+        }
+        super.onAttach(context);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -59,7 +70,7 @@ public class NotePageFragment extends Fragment {
         saveNoteButton.setOnClickListener(v -> {
             String title = titleEditText.getText().toString();
             String note = noteEditText.getText().toString();
-            Repository.repo.createNotes(new NoteEntity(id, title, note));
+            ((Repository) requireActivity().getApplication()).getRepo().createNotes(new NoteEntity(id, title, note));
             showNotification(title);
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                 requireActivity().getSupportFragmentManager()
@@ -84,8 +95,8 @@ public class NotePageFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString(TITLE_TEXT, item.getTitle());
             bundle.putString(NOTE_TEXT, item.getNoteText());
+            bundle.putInt(ID_NOTE, item.getId());
             notePageFragment.setArguments(bundle);
-            Repository.repo.deleteNotes(item.getId());
         }
         return notePageFragment;
     }

@@ -107,7 +107,7 @@ public class NotepadPagesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager((Context) contract));
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this::onItemClick);
-        adapter.setData(Repository.repo.getNotes());
+        adapter.setData(((Repository) requireActivity().getApplication()).getRepo().getNotes());
     }
 
     private void onItemClick(NoteEntity item) {
@@ -143,8 +143,8 @@ public class NotepadPagesFragment extends Fragment {
                 .setTitle(R.string.delete_note)
                 .setMessage(temp)
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-                    Repository.repo.deleteNotes(item.getId());
-                    adapter.setData(Repository.repo.getNotes());
+                    ((Repository) requireActivity().getApplication()).getRepo().deleteNotes(item.getId());
+                    adapter.setData(((Repository) requireActivity().getApplication()).getRepo().getNotes());
                 }).setNegativeButton(R.string.no, null).show();
     }
 
