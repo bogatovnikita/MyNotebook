@@ -20,7 +20,6 @@ public class NoteEntity {
         return id;
     }
 
-    @Nullable
     public void setId(@Nullable Integer id) {
         this.id = id;
     }

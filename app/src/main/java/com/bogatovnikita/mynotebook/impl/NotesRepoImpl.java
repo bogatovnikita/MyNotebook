@@ -20,7 +20,7 @@ public class NotesRepoImpl implements NotesRepo {
     @Override
     public void deleteNotes(Integer id) {
         for (int i = 0; i < allNotes.size(); i++) {
-            if (allNotes.get(i).getId() == id) {
+            if (allNotes.get(i).getId().equals(id)) {
                 allNotes.remove(i);
             }
         }
