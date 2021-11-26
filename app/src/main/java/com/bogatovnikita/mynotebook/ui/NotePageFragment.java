@@ -57,6 +57,7 @@ public class NotePageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         titleEditText = view.findViewById(R.id.title_edit_text);
         noteEditText = view.findViewById(R.id.note_edit_text);
+        saveNoteButton = view.findViewById(R.id.save_note_button);
 
         Bundle args = getArguments();
         if (args != null) {
@@ -66,7 +67,6 @@ public class NotePageFragment extends Fragment {
             noteEditText.setText(noteText);
         }
 
-        saveNoteButton = view.findViewById(R.id.save_note_button);
         saveNoteButton.setOnClickListener(v -> {
             String title = titleEditText.getText().toString();
             String note = noteEditText.getText().toString();

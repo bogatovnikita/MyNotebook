@@ -6,18 +6,5 @@
         android:id="@+id/new_note_menu"
         android:icon="@drawable/ic_baseline_add_24"
         android:title="@string/add_new_page"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/setting_menu"
-        android:icon="@drawable/ic_baseline_settings_24"
-        android:title="@string/setting_page"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/about_application_menu"
-        android:icon="@drawable/ic_baseline_info_24"
-        android:title="@string/about_application"
-        app:showAsAction="never" />
-
+        app:showAsAction="always" />
 </menu>

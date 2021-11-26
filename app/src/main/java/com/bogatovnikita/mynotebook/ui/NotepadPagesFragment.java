@@ -59,7 +59,11 @@ public class NotepadPagesFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
-        inflater.inflate(R.menu.notes_list_menu, menu);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            inflater.inflate(R.menu.notes_list_menu, menu);
+        }else{
+            inflater.inflate(R.menu.notes_list_land_menu,menu);
+        }
         super.onCreateOptionsMenu(menu, inflater);
     }
 
