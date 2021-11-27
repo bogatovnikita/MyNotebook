@@ -43,6 +43,12 @@ public class NotePageFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
+
+    @Override
     public void onAttach(@NonNull Context context) {
         Bundle args = getArguments();
         if (args != null) {

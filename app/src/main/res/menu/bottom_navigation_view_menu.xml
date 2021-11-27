@@ -10,4 +10,9 @@
         android:icon="@drawable/ic_baseline_info_24"
         android:title="@string/about_application" />
 
+    <item
+        android:id="@+id/exit_menu"
+        android:icon="@drawable/ic_baseline_exit_to_app_24"
+        android:title="@string/exit" />
+
 </menu>

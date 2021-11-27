@@ -21,10 +21,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bogatovnikita.mynotebook.R;
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
 import com.bogatovnikita.mynotebook.domain.Repository;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NotepadPagesFragment extends Fragment {
     private Contract contract;
     private RecyclerView recyclerView;
+    private BottomNavigationView bottomNavigationView;
     private final NotesAdapter adapter = new NotesAdapter();
 
     @Override
@@ -45,9 +47,29 @@ public class NotepadPagesFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        bottomNavigationView = view.findViewById(R.id.bottom_navigation_view);
         recyclerView = view.findViewById(R.id.recycler_view);
         initRecyclerView();
+        initBottomNavigationView();
         super.onViewCreated(view, savedInstanceState);
+    }
+
+    private void initBottomNavigationView() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.setting_menu) {
+                    contract.openSettingsFragment();
+                    return true;
+                } else if (item.getItemId() == R.id.about_application_menu) {
+                    contract.openAboutApplicationFragment();
+                    return true;
+                } else if (item.getItemId() == R.id.exit_menu) {
+                    contract.closeApp();
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -59,11 +81,7 @@ public class NotepadPagesFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         menu.clear();
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            inflater.inflate(R.menu.notes_list_menu, menu);
-        }else{
-            inflater.inflate(R.menu.notes_list_land_menu,menu);
-        }
+        inflater.inflate(R.menu.notes_list_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -99,6 +117,8 @@ public class NotepadPagesFragment extends Fragment {
         void openAboutApplicationFragment();
 
         void openAboutApplicationFragmentLand();
+
+        void closeApp();
     }
 
     @Override
@@ -151,6 +171,5 @@ public class NotepadPagesFragment extends Fragment {
                     adapter.setData(((Repository) requireActivity().getApplication()).getRepo().getNotes());
                 }).setNegativeButton(R.string.no, null).show();
     }
-
 }
 

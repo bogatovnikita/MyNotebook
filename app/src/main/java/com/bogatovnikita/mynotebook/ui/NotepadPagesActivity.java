@@ -87,8 +87,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
                 .commit();
     }
 
-    @Override
-    public void onBackPressed() {
+    public void closeApp() {
         new AlertDialog.Builder(this).setIcon(R.drawable.ic_baseline_exit_to_app_24)
                 .setTitle(R.string.exit)
                 .setMessage(R.string.are_you_sure)
@@ -98,5 +97,17 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
                         finishAndRemoveTask();
                     }
                 }).setNegativeButton(R.string.no, null).show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+
     }
 }
