@@ -1,6 +1,5 @@
 package com.bogatovnikita.mynotebook.ui;
 
-import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
@@ -37,6 +36,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_notepad_list_container, NotePageFragment.newInstance(item))
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -45,6 +45,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_notepad_list_container_two, NotePageFragment.newInstance(item))
+                .addToBackStack(null)
                 .commit();
     }
 
@@ -91,12 +92,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
         new AlertDialog.Builder(this).setIcon(R.drawable.ic_baseline_exit_to_app_24)
                 .setTitle(R.string.exit)
                 .setMessage(R.string.are_you_sure)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finishAndRemoveTask();
-                    }
-                }).setNegativeButton(R.string.no, null).show();
+                .setPositiveButton(R.string.yes, (dialogInterface, i) -> finishAndRemoveTask()).setNegativeButton(R.string.no, null).show();
     }
 
     @Override

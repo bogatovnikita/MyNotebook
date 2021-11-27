@@ -50,25 +50,24 @@ public class NotepadPagesFragment extends Fragment {
         bottomNavigationView = view.findViewById(R.id.bottom_navigation_view);
         recyclerView = view.findViewById(R.id.recycler_view);
         initRecyclerView();
-        initBottomNavigationView();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            initBottomNavigationView();
+        }
         super.onViewCreated(view, savedInstanceState);
     }
 
     private void initBottomNavigationView() {
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.setting_menu) {
-                    contract.openSettingsFragment();
-                    return true;
-                } else if (item.getItemId() == R.id.about_application_menu) {
-                    contract.openAboutApplicationFragment();
-                    return true;
-                } else if (item.getItemId() == R.id.exit_menu) {
-                    contract.closeApp();
-                }
-                return false;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            if (item.getItemId() == R.id.setting_menu) {
+                contract.openSettingsFragment();
+                return true;
+            } else if (item.getItemId() == R.id.about_application_menu) {
+                contract.openAboutApplicationFragment();
+                return true;
+            } else if (item.getItemId() == R.id.exit_menu) {
+                contract.closeApp();
             }
+            return false;
         });
     }
 
@@ -90,7 +89,6 @@ public class NotepadPagesFragment extends Fragment {
         if (item.getItemId() == R.id.new_note_menu) {
             contract.openNewNote(null);
         }
-
         if (item.getItemId() == R.id.setting_menu && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             contract.openSettingsFragment();
         } else if (item.getItemId() == R.id.setting_menu) {

@@ -6,8 +6,8 @@ public class NoteEntity {
 
     @Nullable
     private Integer id;
-    private String title;
-    private String noteText;
+    private final String title;
+    private final String noteText;
 
     public NoteEntity(@Nullable Integer id, String title, String noteText) {
         this.id = id;
@@ -28,15 +28,8 @@ public class NoteEntity {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getNoteText() {
         return noteText;
     }
 
-    public void setNoteText(String noteText) {
-        this.noteText = noteText;
-    }
 }

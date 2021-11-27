@@ -5,7 +5,7 @@ import android.app.Application;
 import com.bogatovnikita.mynotebook.impl.NotesRepoImpl;
 
 public class Repository extends Application {
-    private NotesRepo repo = new NotesRepoImpl();
+    private final NotesRepo repo = new NotesRepoImpl();
 
     public NotesRepo getRepo() {
         return repo;

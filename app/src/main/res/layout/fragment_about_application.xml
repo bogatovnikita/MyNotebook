@@ -8,20 +8,20 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/about_title_text"
-        android:textSize="@dimen/text_size_about"
-        android:textStyle="bold"
         android:layout_gravity="top"
-        android:textColor="@color/black"/>
+        android:text="@string/about_title_text"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_about"
+        android:textStyle="bold" />
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/about_text"
-        android:textSize="@dimen/text_size_about"
-        android:textStyle="italic"
         android:layout_gravity="center"
-        android:textColor="@color/black"/>
+        android:text="@string/about_text"
+        android:textColor="@color/black"
+        android:textSize="@dimen/text_size_about"
+        android:textStyle="italic" />
 
 </FrameLayout>

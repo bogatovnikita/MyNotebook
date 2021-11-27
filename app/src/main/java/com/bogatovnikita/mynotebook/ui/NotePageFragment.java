@@ -50,10 +50,6 @@ public class NotePageFragment extends Fragment {
 
     @Override
     public void onAttach(@NonNull Context context) {
-        Bundle args = getArguments();
-        if (args != null) {
-            ((Repository) getActivity().getApplication()).getRepo().deleteNotes(args.getInt(ID_NOTE));
-        }
         super.onAttach(context);
     }
 
@@ -78,13 +74,15 @@ public class NotePageFragment extends Fragment {
             String note = noteEditText.getText().toString();
             ((Repository) requireActivity().getApplication()).getRepo().createNotes(new NoteEntity(id, title, note));
             showNotification(title);
+            if (args != null) {
+                ((Repository) getActivity().getApplication()).getRepo().deleteNotes(args.getInt(ID_NOTE));
+            }
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
                         .remove(this)
                         .commit();
-
             } else {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()

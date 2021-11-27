@@ -1,7 +1,5 @@
 package com.bogatovnikita.mynotebook.impl;
 
-import androidx.annotation.Nullable;
-
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
 import com.bogatovnikita.mynotebook.domain.NotesRepo;
 
@@ -26,18 +24,9 @@ public class NotesRepoImpl implements NotesRepo {
         }
     }
 
-    @Nullable
     @Override
-    public Integer createNotes(NoteEntity note) {
+    public void createNotes(NoteEntity note) {
         note.setId(++count);
-        allNotes.add(note);
-        return count;
-    }
-
-    @Override
-    public void updateNotes(@Nullable Integer id, NoteEntity note) {
-        deleteNotes(id);
-        note.setId(id);
         allNotes.add(note);
     }
 }
