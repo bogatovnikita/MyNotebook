@@ -29,10 +29,10 @@ public class NotePageFragment extends Fragment {
     Integer id;
     EditText titleEditText;
     EditText noteEditText;
+    Button saveNoteButton;
     private static final String TITLE_TEXT = "TITLE_TEXT";
     private static final String NOTE_TEXT = "NOTE_TEXT";
     private static final String ID_NOTE = "ID_NOTE";
-    Button saveNoteButton;
     public static final String CHANNEL_ID = "CHANNEL_ID";
     public static final int ID_NOTIFICATION = 24;
 
@@ -45,7 +45,6 @@ public class NotePageFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setRetainInstance(true);
     }
 
     @Override

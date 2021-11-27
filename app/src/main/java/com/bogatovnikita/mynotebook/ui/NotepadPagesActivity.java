@@ -17,7 +17,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
         setContentView(R.layout.notepad_list_activity);
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             initNotepadListFragment();
-        } else {
+        } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             initNotepadListFragmentLand();
         }
     }

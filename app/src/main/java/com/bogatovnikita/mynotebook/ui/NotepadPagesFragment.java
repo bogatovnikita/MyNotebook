@@ -89,17 +89,13 @@ public class NotepadPagesFragment extends Fragment {
         if (item.getItemId() == R.id.new_note_menu) {
             contract.openNewNote(null);
         }
-        if (item.getItemId() == R.id.setting_menu && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            contract.openSettingsFragment();
-        } else if (item.getItemId() == R.id.setting_menu) {
+        if (item.getItemId() == R.id.setting_menu && getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             contract.openSettingsFragmentLand();
         }
-
-        if (item.getItemId() == R.id.about_application_menu && getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            contract.openAboutApplicationFragment();
-        } else if (item.getItemId() == R.id.about_application_menu) {
+        if (item.getItemId() == R.id.about_application_menu && getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             contract.openAboutApplicationFragmentLand();
         }
+
         return super.onOptionsItemSelected(item);
     }
 
