@@ -5,6 +5,10 @@ plugins {
 android {
     compileSdk 28
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "com.bogatovnikita.mynotebook"
         minSdk 23

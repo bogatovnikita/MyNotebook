@@ -7,14 +7,21 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bogatovnikita.mynotebook.R;
+import com.bogatovnikita.mynotebook.databinding.NotepadListActivityBinding;
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
+import com.bogatovnikita.mynotebook.ui.aboutApplicationFragment.AboutApplicationFragment;
+import com.bogatovnikita.mynotebook.ui.notePageFragment.NotePageFragment;
+import com.bogatovnikita.mynotebook.ui.notepadPagesFragment.NotepadPagesFragment;
+import com.bogatovnikita.mynotebook.ui.settingFragment.SettingsFragment;
 
 public class NotepadPagesActivity extends AppCompatActivity implements NotepadPagesFragment.Contract {
+    private NotepadListActivityBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.notepad_list_activity);
+        binding = NotepadListActivityBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             initNotepadListFragment();
         } else if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
@@ -25,7 +32,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     protected void initNotepadListFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
+                .replace(binding.fragmentNotepadListContainer.getId(), new NotepadPagesFragment())
                 .commit();
     }
 
@@ -33,7 +40,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     public void openNewNote(NoteEntity item) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_notepad_list_container, NotePageFragment.newInstance(item))
+                .replace(binding.fragmentNotepadListContainer.getId(), NotePageFragment.newInstance(item))
                 .addToBackStack(null)
                 .commit();
     }
@@ -42,7 +49,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     public void openNewNoteLand(NoteEntity item) {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_notepad_list_container_two, NotePageFragment.newInstance(item))
+                .replace(binding.fragmentNotepadListContainerTwo.getId(), NotePageFragment.newInstance(item))
                 .addToBackStack(null)
                 .commit();
     }
@@ -50,15 +57,15 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     protected void initNotepadListFragmentLand() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
-                .replace(R.id.fragment_notepad_list_container_two, new NotePageFragment())
+                .replace(binding.fragmentNotepadListContainer.getId(), new NotepadPagesFragment())
+                .replace(binding.fragmentNotepadListContainerTwo.getId(), new NotePageFragment())
                 .commit();
     }
 
     public void openSettingsFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_notepad_list_container, new SettingsFragment())
+                .replace(binding.fragmentNotepadListContainer.getId(), new SettingsFragment())
                 .addToBackStack(null)
                 .commit();
     }
@@ -66,7 +73,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     public void openSettingsFragmentLand() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_notepad_list_container_two, new SettingsFragment())
+                .replace(binding.fragmentNotepadListContainerTwo.getId(), new SettingsFragment())
                 .addToBackStack(null)
                 .commit();
     }
@@ -74,7 +81,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     public void openAboutApplicationFragment() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_notepad_list_container, new AboutApplicationFragment())
+                .replace(binding.fragmentNotepadListContainer.getId(), new AboutApplicationFragment())
                 .addToBackStack(null)
                 .commit();
     }
@@ -82,7 +89,7 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
     public void openAboutApplicationFragmentLand() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_notepad_list_container_two, new AboutApplicationFragment())
+                .replace(binding.fragmentNotepadListContainerTwo.getId(), new AboutApplicationFragment())
                 .addToBackStack(null)
                 .commit();
     }

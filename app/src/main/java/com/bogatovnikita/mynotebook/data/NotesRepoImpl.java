@@ -1,4 +1,4 @@
-package com.bogatovnikita.mynotebook.impl;
+package com.bogatovnikita.mynotebook.data;
 
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
 import com.bogatovnikita.mynotebook.domain.NotesRepo;

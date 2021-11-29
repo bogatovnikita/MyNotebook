@@ -2,9 +2,9 @@ package com.bogatovnikita.mynotebook.domain;
 
 import android.app.Application;
 
-import com.bogatovnikita.mynotebook.impl.NotesRepoImpl;
+import com.bogatovnikita.mynotebook.data.NotesRepoImpl;
 
-public class Repository extends Application {
+public class App extends Application {
     private final NotesRepo repo = new NotesRepoImpl();
 
     public NotesRepo getRepo() {

@@ -1,4 +1,4 @@
-package com.bogatovnikita.mynotebook.ui;
+package com.bogatovnikita.mynotebook.ui.notepadPagesFragment;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -16,18 +16,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bogatovnikita.mynotebook.R;
+import com.bogatovnikita.mynotebook.databinding.FragmentNotepadListBinding;
+import com.bogatovnikita.mynotebook.domain.App;
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
-import com.bogatovnikita.mynotebook.domain.Repository;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.bogatovnikita.mynotebook.ui.NotesAdapter;
 
 public class NotepadPagesFragment extends Fragment {
     private Contract contract;
-    private RecyclerView recyclerView;
-    private BottomNavigationView bottomNavigationView;
     private final NotesAdapter adapter = new NotesAdapter();
+    private FragmentNotepadListBinding binding;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -42,13 +41,12 @@ public class NotepadPagesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notepad_list, container, false);
+        binding = FragmentNotepadListBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        bottomNavigationView = view.findViewById(R.id.bottom_navigation_view);
-        recyclerView = view.findViewById(R.id.recycler_view);
         initRecyclerView();
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             initBottomNavigationView();
@@ -57,7 +55,7 @@ public class NotepadPagesFragment extends Fragment {
     }
 
     private void initBottomNavigationView() {
-        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+        binding.bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.setting_menu) {
                 contract.openSettingsFragment();
                 return true;
@@ -99,7 +97,7 @@ public class NotepadPagesFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    interface Contract {
+    public interface Contract {
         void openNewNote(NoteEntity item);
 
         void openNewNoteLand(NoteEntity item);
@@ -117,15 +115,16 @@ public class NotepadPagesFragment extends Fragment {
 
     @Override
     public void onDestroy() {
+        binding = null;
         contract = null;
         super.onDestroy();
     }
 
     public void initRecyclerView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager((Context) contract));
-        recyclerView.setAdapter(adapter);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager((Context) contract));
+        binding.recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(this::onItemClick);
-        adapter.setData(((Repository) requireActivity().getApplication()).getRepo().getNotes());
+        adapter.setData(((App) requireActivity().getApplication()).getRepo().getNotes());
     }
 
     private void onItemClick(NoteEntity item) {
@@ -133,7 +132,7 @@ public class NotepadPagesFragment extends Fragment {
     }
 
     private void showContextMenu(NoteEntity item) {
-        recyclerView.setOnCreateContextMenuListener((contextMenu, view, contextMenuInfo) -> {
+        binding.recyclerView.setOnCreateContextMenuListener((contextMenu, view, contextMenuInfo) -> {
             requireActivity().getMenuInflater().inflate(R.menu.popup_notes_list_menu, contextMenu);
 
             contextMenu.findItem(R.id.delete_note_popup_menu).setOnMenuItemClickListener(menuItem -> {
@@ -150,7 +149,7 @@ public class NotepadPagesFragment extends Fragment {
                 return true;
             });
         });
-        recyclerView.showContextMenu();
+        binding.recyclerView.showContextMenu();
     }
 
     private void dialogDeleteNoteScreen(NoteEntity item) {
@@ -161,8 +160,8 @@ public class NotepadPagesFragment extends Fragment {
                 .setTitle(R.string.delete_note)
                 .setMessage(temp)
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
-                    ((Repository) requireActivity().getApplication()).getRepo().deleteNotes(item.getId());
-                    adapter.setData(((Repository) requireActivity().getApplication()).getRepo().getNotes());
+                    ((App) requireActivity().getApplication()).getRepo().deleteNotes(item.getId());
+                    adapter.setData(((App) requireActivity().getApplication()).getRepo().getNotes());
                 }).setNegativeButton(R.string.no, null).show();
     }
 }
