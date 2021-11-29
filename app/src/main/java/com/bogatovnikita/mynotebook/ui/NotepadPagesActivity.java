@@ -1,8 +1,10 @@
 package com.bogatovnikita.mynotebook.ui;
 
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bogatovnikita.mynotebook.R;
@@ -85,4 +87,16 @@ public class NotepadPagesActivity extends AppCompatActivity implements NotepadPa
                 .commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this).setIcon(R.drawable.ic_baseline_exit_to_app_24)
+                .setTitle(R.string.exit)
+                .setMessage(R.string.are_you_sure)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finishAndRemoveTask();
+                    }
+                }).setNegativeButton(R.string.no, null).show();
+    }
 }

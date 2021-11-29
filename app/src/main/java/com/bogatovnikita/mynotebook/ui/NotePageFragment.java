@@ -1,6 +1,11 @@
 package com.bogatovnikita.mynotebook.ui;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +15,9 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bogatovnikita.mynotebook.R;
@@ -23,6 +31,8 @@ public class NotePageFragment extends Fragment {
     private static final String TITLE_TEXT = "TITLE_TEXT";
     private static final String NOTE_TEXT = "NOTE_TEXT";
     Button saveNoteButton;
+    public static final String CHANNEL_ID = "CHANNEL_ID";
+    public static final int ID_NOTIFICATION = 24;
 
     @Nullable
     @Override
@@ -30,6 +40,7 @@ public class NotePageFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_note_page_screen, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -49,15 +60,16 @@ public class NotePageFragment extends Fragment {
             String title = titleEditText.getText().toString();
             String note = noteEditText.getText().toString();
             Repository.repo.createNotes(new NoteEntity(id, title, note));
+            showNotification(title);
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-                getActivity().getSupportFragmentManager()
+                requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
                         .remove(this)
                         .commit();
 
             } else {
-                getActivity().getSupportFragmentManager()
+                requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
                         .replace(R.id.fragment_notepad_list_container_two, new NotePageFragment())
@@ -76,5 +88,25 @@ public class NotePageFragment extends Fragment {
             Repository.repo.deleteNotes(item.getId());
         }
         return notePageFragment;
+    }
+
+    private void showNotification(String title) {
+        createNotificationChannel();
+
+        Resources resources = getResources();
+        String temp = String.format(resources.getString(R.string.add_new_note_notification), title);
+        Notification notification = new NotificationCompat.Builder(requireActivity(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_baseline_notifications_active_24)
+                .setContentTitle(temp)
+                .build();
+        NotificationManagerCompat.from(requireActivity()).notify(ID_NOTIFICATION, notification);
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManagerCompat.from(requireActivity()).createNotificationChannel(
+                    new NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_HIGH)
+            );
+        }
     }
 }
