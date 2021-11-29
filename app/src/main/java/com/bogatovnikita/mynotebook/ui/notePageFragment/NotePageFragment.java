@@ -1,8 +1,9 @@
-package com.bogatovnikita.mynotebook.ui;
+package com.bogatovnikita.mynotebook.ui.notePageFragment;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -10,8 +11,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,53 +20,63 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bogatovnikita.mynotebook.R;
+import com.bogatovnikita.mynotebook.databinding.FragmentNotePageScreenBinding;
+import com.bogatovnikita.mynotebook.domain.App;
 import com.bogatovnikita.mynotebook.domain.NoteEntity;
-import com.bogatovnikita.mynotebook.domain.Repository;
+import com.bogatovnikita.mynotebook.ui.notepadPagesFragment.NotepadPagesFragment;
 
 public class NotePageFragment extends Fragment {
-    Integer id;
-    EditText titleEditText;
-    EditText noteEditText;
     private static final String TITLE_TEXT = "TITLE_TEXT";
     private static final String NOTE_TEXT = "NOTE_TEXT";
-    Button saveNoteButton;
+    private static final String ID_NOTE = "ID_NOTE";
     public static final String CHANNEL_ID = "CHANNEL_ID";
     public static final int ID_NOTIFICATION = 24;
+    private FragmentNotePageScreenBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_note_page_screen, container, false);
+        binding = FragmentNotePageScreenBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        titleEditText = view.findViewById(R.id.title_edit_text);
-        noteEditText = view.findViewById(R.id.note_edit_text);
 
         Bundle args = getArguments();
         if (args != null) {
             String titleText = args.getString(TITLE_TEXT);
             String noteText = args.getString(NOTE_TEXT);
-            titleEditText.setText(titleText);
-            noteEditText.setText(noteText);
+            binding.titleEditText.setText(titleText);
+            binding.noteEditText.setText(noteText);
         }
 
-        saveNoteButton = view.findViewById(R.id.save_note_button);
-        saveNoteButton.setOnClickListener(v -> {
-            String title = titleEditText.getText().toString();
-            String note = noteEditText.getText().toString();
-            Repository.repo.createNotes(new NoteEntity(id, title, note));
+        binding.saveNoteButton.setOnClickListener(v -> {
+            String title = binding.titleEditText.getText().toString();
+            String note = binding.noteEditText.getText().toString();
+            ((App) requireActivity().getApplication()).getRepo().createNotes(new NoteEntity(null, title, note));
             showNotification(title);
+            if (args != null) {
+                ((App) getActivity().getApplication()).getRepo().deleteNotes(args.getInt(ID_NOTE));
+            }
             if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
                         .replace(R.id.fragment_notepad_list_container, new NotepadPagesFragment())
                         .remove(this)
                         .commit();
-
             } else {
                 requireActivity().getSupportFragmentManager()
                         .beginTransaction()
@@ -84,8 +93,8 @@ public class NotePageFragment extends Fragment {
             Bundle bundle = new Bundle();
             bundle.putString(TITLE_TEXT, item.getTitle());
             bundle.putString(NOTE_TEXT, item.getNoteText());
+            bundle.putInt(ID_NOTE, item.getId());
             notePageFragment.setArguments(bundle);
-            Repository.repo.deleteNotes(item.getId());
         }
         return notePageFragment;
     }
